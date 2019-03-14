@@ -9,6 +9,10 @@ server.get('/', async (req, res, next) => {
   if (!req.query.username) {
     res.status(404).json({message: "BAD REQUEST"})
   }
+  var usernameRegex = /^[a-zA-Z0-9]+$/
+  if (!usernameRegex.test(req.query.username)) {
+    res.status(400).json({message: "bad request"})
+  }
   const py = await require('child_process').spawn('python', [
     './app.py',
     req.query.username
