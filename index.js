@@ -1,7 +1,12 @@
 const express = require('express')
 const server = express()
 
+
+
 server.get('/', async (req, res) => {
+  if (!req.query.username) {
+    res.status(404).json({message: "BAD REQUEST"})
+  }
   const py = await require('child_process').spawn('python', [
     './app.py',
     req.query.username
