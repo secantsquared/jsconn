@@ -248,3 +248,4 @@ dmypy.json
 npm-debug.log
 .DS_Store
 /*.env
+credential.py
