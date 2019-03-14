@@ -4,11 +4,7 @@ import requests
 import pandas as pd
 import sys
 import credentials
-'''
-The meat and potatoes of the app- Take in data from the API
- -apply magic.DS- dump it into the database
-'''
-
+import json
 
 
 def parseLinkHeader(headers):
@@ -41,8 +37,8 @@ def collect_things(endpoint):
     return things
 
 
-def app(username):
-    user = username
+def app():
+    user = sys.argv[1]
     repos_link = "https://api.github.com/users/{}/repos?client_id={}&client_secret={}".format(user, credentials.creds['CLIENT_ID'], credentials.creds['CLIENT_SECRET'])
     user_repos = requests.get(repos_link)
     repos = user_repos.json()
@@ -72,9 +68,8 @@ def app(username):
     commits = pd.Series(punch_df[2])
     assemble = pd.concat([day, hour, commits], axis=1)
     assemble.columns = ['Day', 'Hour', 'Commits']
-    comms = assemble.to_json(orient='index')
+    comms = assemble.to_json()
+    print(lang_json)
 
-    return comms, lang_json
 
-
-print(app(sys.argv[1]))
+app()
