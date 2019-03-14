@@ -8,7 +8,7 @@ server.get('/', async (req, res) => {
   ])
   try {
     py.stdout.on('data', data => {
-      res.send(data.toString())
+      res.json(data.toString())
     })
   } catch (e) {
     py.stderr.on(
