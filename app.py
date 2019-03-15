@@ -39,14 +39,15 @@ def collect_things(endpoint):
 
 def app():
     user = sys.argv[1]
-    repos_link = "https://api.github.com/users/{}/repos?client_id={}&client_secret={}".format(user, credentials.creds['CLIENT_ID'], credentials.creds['CLIENT_SECRET'])
+    repos_link = "https://api.github.com/users/{}/repos?client_id={}&client_secret={}".format(
+        user, credentials.creds['CLIENT_ID'], credentials.creds['CLIENT_SECRET'])
     user_repos = requests.get(repos_link)
     repos = user_repos.json()
     while 'next' in user_repos.links.keys():
         user_repos = requests.get(user_repos.links['next']['url'])
         repos.extend(user_repos.json())
         repo_df = pd.DataFrame(repos)
-    repo_names= list(repo_df['name'])
+    repo_names = list(repo_df['name'])
     langs = repo_df['language'].value_counts()
     lang_json = langs.to_json()
     reps = list(repo_names)
