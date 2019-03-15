@@ -14,7 +14,8 @@
   "license": "MIT",
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "ps-tree": "^1.2.0"
   },
   "engines": {
     "node": "10.15.3"
