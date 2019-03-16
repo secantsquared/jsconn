@@ -46,15 +46,9 @@ def app():
     while 'next' in user_repos.links.keys():
         user_repos = requests.get(user_repos.links['next']['url'])
         repos.extend(user_repos.json())
-        repo_df = pd.DataFrame(repos)
-    repo_names = list(repo_df['name'])
-    langs = repo_df['language'].value_counts()
-    lang_json = langs.to_json()
-    reps = list(repo_names)
     repo_df = pd.DataFrame(repos)
     langs = repo_df['language'].value_counts()
-    lang_json = langs.to_json()
-    print(lang_json)
+    print(langs)
 
 
 app()

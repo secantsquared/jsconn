@@ -3,8 +3,6 @@ const cors = require('cors')
 const server = express()
 const psTree = require('ps-tree')
 
-server.use(cors())
-
 var kill = function(pid, signal, callback) {
   signal = signal || 'SIGKILL'
   callback = callback || function() {}
@@ -31,27 +29,27 @@ var kill = function(pid, signal, callback) {
     callback()
   }
 }
-
-// ... somewhere in the code of Yez!
+server.use(cors())
 server.get('/', async (req, res, next) => {
   if (!req.query.username) {
-    res.status(404).json({ message: 'BAD REQUEST' })
+    res.status(401).json({ message: 'Unauthorized' })
   }
-
+  var usernameRegex = /^[a-zA-Z0-9]+$/
+  if (!usernameRegex.test(req.query.username)) {
+    res.status(400).json({ message: 'bad request' })
+  }
   const py = await require('child_process').spawn('python', [
     './app.py',
     req.query.username
   ])
-
   try {
-    py.stdout.on('data', data => {
-      res.json(JSON.parse(data))
-    })
+    py.stdout.on('data', data => res.end(data))
   } catch (e) {
     py.stderr.on(
       'data',
       data => {
         console.log(`stderr: ${data}`)
+        res.status(500).json({ message: 'An error has occurred.' })
       },
       e
     )
@@ -62,4 +60,4 @@ server.get('/', async (req, res, next) => {
     })
   }
 })
-server.listen(process.env.PORT || 3000, console.log('up and running'))
+server.listen(process.env.PORT || 4000, console.log('up and running'))
