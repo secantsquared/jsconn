@@ -3,6 +3,15 @@ const cors = require('cors')
 const server = express()
 const psTree = require('ps-tree')
 server.use(cors())
+server.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*')
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept'
+  )
+  next()
+})
+
 var kill = function(pid, signal, callback) {
   signal = signal || 'SIGKILL'
   callback = callback || function() {}
