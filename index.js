@@ -43,7 +43,7 @@ server.get('/', async (req, res, next) => {
     req.query.username
   ])
   try {
-    py.stdout.on('data', data => res.end(data))
+    py.stdout.on('data', data => res.json(JSON.parse(data)))
   } catch (e) {
     py.stderr.on(
       'data',
