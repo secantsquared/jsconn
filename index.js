@@ -2,7 +2,7 @@ const express = require('express')
 const cors = require('cors')
 const server = express()
 const psTree = require('ps-tree')
-
+server.use(cors())
 var kill = function(pid, signal, callback) {
   signal = signal || 'SIGKILL'
   callback = callback || function() {}
@@ -29,14 +29,14 @@ var kill = function(pid, signal, callback) {
     callback()
   }
 }
-server.use(cors())
+
 server.get('/', async (req, res, next) => {
   if (!req.query.username) {
-    res.status(401).json({ message: 'Unauthorized' })
+    res.json({ message: 'Unauthorized' })
   }
   var usernameRegex = /^[a-zA-Z0-9]+$/
   if (!usernameRegex.test(req.query.username)) {
-    res.status(400).json({ message: 'bad request' })
+    res.json({ message: 'bad request' })
   }
   const py = await require('child_process').spawn('python', [
     './app.py',
