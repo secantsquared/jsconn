@@ -48,6 +48,7 @@ def app():
         repos.extend(user_repos.json())
     repo_df = pd.DataFrame(repos)
     langs = repo_df['language'].value_counts()
+    langs = langs.to_json()
     print(langs)
 
 
