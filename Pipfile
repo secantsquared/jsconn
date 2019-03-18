@@ -4,14 +4,12 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-pylint = "*"
-autopep8 = "*"
-pep8 = "*"
 
 [packages]
-numpy = "*"
-pandas = "*"
+flask = "*"
 requests = "*"
+pandas = "*"
+numpy = "*"
 python-dotenv = "*"
 
 [requires]
