@@ -12,7 +12,7 @@ pep8 = "*"
 numpy = "*"
 pandas = "*"
 requests = "*"
-rq = "*"
+python-dotenv = "*"
 
 [requires]
 python_version = "3.7"

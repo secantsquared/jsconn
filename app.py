@@ -1,10 +1,8 @@
 #!/usr/bin/env python
-from requests import get as GET
-import requests
+from requests import get as GET, request
 import pandas as pd
-import sys
-import credentials
 import json
+
 
 
 def parseLinkHeader(headers):
@@ -38,9 +36,8 @@ def collect_things(endpoint):
 
 
 def app():
-    user = sys.argv[1]
-    repos_link = "https://api.github.com/users/{}/repos?client_id={}&client_secret={}".format(
-        user, credentials.creds['CLIENT_ID'], credentials.creds['CLIENT_SECRET'])
+    url_base = 'https://api.github.com/users/{'
+    repos_link = 'https://api.github.com/users/{}/repos?client_id={}&client_secret={}'
     user_repos = requests.get(repos_link)
     repos = user_repos.json()
     while 'next' in user_repos.links.keys():

@@ -3,6 +3,9 @@
 # Edit at https://www.gitignore.io/?templates=node,macos,python,visualstudiocode
 
 ### macOS ###
+.vscode
+./.vscode
+*/*/settings.json
 # General
 .DS_Store
 .AppleDouble

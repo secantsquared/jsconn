@@ -1,6 +1,5 @@
 numpy
 pandas
 requests
-sys
-credentials
-json
+python-dotenv
+
